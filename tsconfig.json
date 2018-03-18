@@ -1,0 +1,22 @@
+{
+  "include": [
+    "src/**/*.ts"
+  ],
+  "compilerOptions": {
+    "module": "commonjs",
+    "outDir": "dist",
+    "sourceMap": true,
+    "target": "es2015",
+    "moduleResolution": "node",
+    "baseUrl": "src", // URL FIX 'src/comp1' TO  @import 'comp1'
+    "paths": {
+      "*": [
+        "*", //Paths
+        "modules/*"
+      ]
+    }
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}

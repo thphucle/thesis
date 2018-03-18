@@ -1,0 +1,64 @@
+[
+  {
+    "name": "gold",
+    "title": "GOLD",
+    "invest": 500,
+    "condition": 10000,
+    "bonus": 0,
+    "priority": 0
+  },
+  {
+    "name": "sapphire",
+    "title": "SAPPHIRE",
+    "invest": 1000,
+    "downline_title_count": 3,
+    "downline_title": "gold",
+    "bonus": 1,
+    "priority": 1
+  },
+  {
+    "name": "ruby",
+    "title": "RUBY",
+    "invest": 2000,
+    "downline_title_count": 3,
+    "downline_title": "sapphire",
+    "bonus": 2,
+    "priority": 2
+  },
+  {
+    "name": "emerald",
+    "title": "EMERALD",
+    "invest": 5000,
+    "downline_title_count": 4,
+    "downline_title": "ruby",
+    "bonus": 4,
+    "priority": 3
+  },  
+  {
+    "name": "diamond",
+    "title": "DIAMOND",
+    "invest": 10000,
+    "downline_title_count": 4,
+    "downline_title": "emerald",
+    "bonus": 6,
+    "priority": 4
+  },
+  {
+    "name": "blue_diamond",
+    "title": "BLUE DIAMOND",
+    "invest": 50000,
+    "downline_title_count": 4,
+    "downline_title": "diamond",
+    "bonus": 8,
+    "priority": 5
+  },
+  {
+    "name": "black_diamond",
+    "title": "BLACK DIAMOND",
+    "invest": 100000,
+    "downline_title_count": 5,
+    "downline_title": "blue_diamond",
+    "bonus": 10,
+    "priority": 6
+  }
+]

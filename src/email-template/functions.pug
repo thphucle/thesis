@@ -1,0 +1,3 @@
+mixin formatNumber(inp) 
+  - var formated = inp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+  span= formated

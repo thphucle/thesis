@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  table(border="0", cellpadding="0", cellspacing="0")
+    tr
+      td
+        h2= title
+        p Hi 
+          strong= user.fullname
+          |,
+        p We see that you did not update your ETH wallet to receive/sell/buy CTU tokens on our network.
+        p Please fulfill the Ethereum wallet information.
+        br
+        a.btn-darkslateblue(href=user.link, target='_blank') Click here to login!

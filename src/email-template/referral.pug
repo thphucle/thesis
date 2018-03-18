@@ -1,0 +1,20 @@
+extends layout
+
+block content
+  table(border="0", cellpadding="0", cellspacing="0")
+    tr
+      td
+        h2= title
+        p Hi 
+          strong= user.fullname
+          |,
+        p You can join the CTU referral program by copying your referral links and send it to your friends/network.
+        p You will receive free CTU tokens for each successful account-registration on 
+          a(href='https://contractium.io') Contractium.io
+        p Please check your referral links and status on your dashboard.
+        br
+        a.btn-darkslateblue(href=user.link, target='_blank') Click here to login!
+        br
+    tr
+      td
+        p(style='margin-top: 15px') Disclaimer: Our system bot will double check and scan the user-registration via your referral links. Your CTU wallet would be credited if 01 identified user registered 01 account on Contractium.io. If there are more than 02 accounts registered by 01 user, we will deduct that amount of CTU via your referral. 

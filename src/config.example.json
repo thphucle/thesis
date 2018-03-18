@@ -1,0 +1,98 @@
+{
+  "server": {
+    "port": "8800",
+    "base_url": "http://localhost:8800",
+    "staticFirst": true,
+    "index_html": "../../client/dist/index.html",
+    "uploadsDir": "../../uploads/",
+    "publicDirs": [{
+      "route": "/uploads",
+      "path": "../../uploads/"
+    }, {
+      "route": "/",
+      "path": "../../client/dist"
+    }]
+  },
+  "image_size": {
+    "large": 520,
+    "medium": 460,
+    "small": 240,
+    "thumbnail": 100
+  },
+  "app": {
+    "jwt_secret": "hehehihihhahahaha"
+  },  
+  "database": {
+    "username": "ctu",
+    "password": "123456",
+    "database": "ctudb",
+    "host": "127.0.0.1",
+    "port": 5432,
+    "dialect": "postgres",
+    "logging": false,
+    "define": {
+      "underscored": true
+    }
+  },
+  "mail": {
+    "verifylink": "http://localhost:7700/api/v1/user/verify",
+    "host": "smtp.gmail.com",
+    "username": "support@bitdeal.com",
+    "password": "BsbDb2sNLxcKp7gX",
+    "secure": false,
+    "port": 587,
+    "websitelink": "http://localhost:7700"
+  },
+  "esms": {
+    "APIKey": "201B1C1476493E93DB9B1D1F44A82F",
+    "SecretKey": "410DCD81C2859609C8FC80351FDA7C",
+    "url": "http://api.esms.vn/MainService.svc/xml/SendMultipleMessage_V2/"
+  },
+  "twilio": {
+    "account_id": "AC42488c2091296912f63eaf4a44435a5f",
+    "token": "4776d0e3410da900e5ac020bc4425ff5",
+    "from_number": "+18446858333"
+  },
+  "bitgo_service": {
+    "token": "enter token",
+    "api": "https://w.bitdeal.co/api/v1",
+    "wallet_id": "wallet id",
+    "sending_wallet_id": "send wallet id",
+    "site_id": "your site"
+  },
+  "bitdeal_service": [
+    {
+      "base_url": "http://localhost",
+      "token": "a6UN+Zf+mY2PUFE&+Yv6&$u2+5?=7Kz^",
+      "port": {
+        "min": 5001,
+        "max": 5002
+      }
+    }
+  ],
+  "bitdeal_hook_token": "YFxKgnfE9uDQLcn4pXWYc598O7Vm1PMJXiTeblQlC9sKm706Z86cuigYweFkkYex",
+  "telegram": {
+    "url":"https://api.telegram.org/bot156097778:AAGUkHpuAY-RihvCVHA7g_E1vHfEnb45pF4/sendMessage",
+    "group_token":"-238680156",
+    "group_support": "-167459144",
+    "group_issue_report": "-201423695",
+    "group_withdraw": "-190793381",
+    "userBot": "501031235:AAFm4i_h1v-b9U5kvwEckAxbr51aNOWLKyg"
+  },
+  "cronjob": {
+    "schedules": [13, 14]
+  },
+  "deposit": {
+    "send_more_address": "GPBUgYa4t7qHddPFmVjRtZnFFhj7XCQiUV",
+    "send_more_btc_address": "3Heks62yzjtZLchuUwS7LqALYkPXPTGXVv"
+  },
+  "withdraw": {
+    "lock_all": false,
+    "threshold_auto": 10,
+    "limit_per_day": 20,
+    "limit_transaction_per_day": 3
+  },  
+  "exchange": {
+    "fee": "0.0015"
+  }
+}

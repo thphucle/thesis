@@ -1,0 +1,13 @@
+node_modules
+public/uploads
+dist
+.DS_Store
+.idea
+yarn.lock
+src/config.json
+dump
+data
+yarn.lock
+yarn-error.log
+package-lock.json
+gulpconfig.json

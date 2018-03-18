@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  table(border="0", cellpadding="0", cellspacing="0")
+    tr
+      td
+        h2= title
+        p Hi 
+          strong= user.fullname
+          |,
+        p We see that you did not register KYC (Know-your-customer) on contractium.io.
+        p In term of security &amp; policy, please register your KYC to join our network.
+        br
+        a.btn-darkslateblue(href=user.link, target='_blank') Click here to login!

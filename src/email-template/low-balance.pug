@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  table(border="0", cellpadding="0", cellspacing="0")
+    tr
+      td
+        h2= title
+        p Your account balance is low!!!
+        ul
+          li
+            label
+              strong Current balance:
+            +formatNumber(account.balance.value)
+            span= ' ' + account.balance.currency
+        p Please deposit to increase your balance.

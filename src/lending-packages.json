@@ -1,0 +1,90 @@
+[
+  {
+    "price": 50,
+    "bonus": 3,
+    "total": 125,
+    "daily_withdraw_rate": 1,
+    "weekly_withdraw_limit": 500,
+    "period": 50,
+    "maxout_rate": 300,
+    "binary_bonus_rate": 3,
+    "passive_bonus_rate": 0.5
+  },
+  {
+    "price": 1000,
+    "bonus": 4,
+    "total": 3000,
+    "daily_withdraw_rate": 1,
+    "weekly_withdraw_limit": 1000,
+    "period": 50,
+    "maxout_rate": 300,
+    "binary_bonus_rate": 3.5,
+    "passive_bonus_rate": 1
+  },
+  {
+    "price": 2000,
+    "bonus": 5,
+    "total": 6000,
+    "daily_withdraw_rate": 1,
+    "weekly_withdraw_limit": 2000,
+    "period": 40,
+    "maxout_rate": 400,
+    "binary_bonus_rate": 4,
+    "passive_bonus_rate": 1.5
+  },
+  {
+    "price": 5000,
+    "bonus": 6,
+    "total": 17000,
+    "daily_withdraw_rate": 1,
+    "weekly_withdraw_limit": 5000,
+    "period": 40,
+    "maxout_rate": 400,
+    "binary_bonus_rate": 4.5,
+    "passive_bonus_rate": 2
+  },
+  {
+    "price": 10000,
+    "bonus": 7,
+    "total": 31000,
+    "daily_withdraw_rate": 1,
+    "weekly_withdraw_limit": 20000,
+    "period": 30,
+    "maxout_rate": 500,
+    "binary_bonus_rate": 5,
+    "passive_bonus_rate": 2.5
+  },
+  {
+    "price": 20000,
+    "bonus": 8,
+    "total": 68000,
+    "daily_withdraw_rate": 1,
+    "weekly_withdraw_limit": 40000,
+    "period": 30,
+    "maxout_rate": 500,
+    "binary_bonus_rate": 5.5,
+    "passive_bonus_rate": 3
+  },
+  {
+    "price": 50000,
+    "bonus": 9,
+    "total": 140000,
+    "daily_withdraw_rate": 1,
+    "weekly_withdraw_limit": 100000,
+    "period": 20,
+    "maxout_rate": 600,
+    "binary_bonus_rate": 6,
+    "passive_bonus_rate": 3.5
+  },
+  {
+    "price": 100000,
+    "bonus": 10,
+    "total": 300000,
+    "daily_withdraw_rate": 1,
+    "weekly_withdraw_limit": 200000,
+    "period": 20,
+    "maxout_rate": 600,
+    "binary_bonus_rate": 7,
+    "passive_bonus_rate": 4
+  }
+]

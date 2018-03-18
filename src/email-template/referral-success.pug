@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  table(border="0", cellpadding="0", cellspacing="0")
+    tr
+      td
+        h2= title
+        p Hi 
+          strong= user.fullname
+          |,
+        p There is one added referral via your links.
+        p Congratulation! You got free CTU tokens today!  
+        p Please check your referral status on your dashboard.
+        br
+        a.btn-darkslateblue(href=user.link, target='_blank') Click here to login!
+        br

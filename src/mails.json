@@ -1,0 +1,9 @@
+[
+  {
+    "user":"bot@contractium.io",
+    "pass":"Contractium@2018",
+    "host":"smtp.zoho.com",
+    "secure": false,
+    "port": 587
+  }
+]

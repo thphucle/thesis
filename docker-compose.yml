@@ -1,0 +1,38 @@
+
+version: '2'
+services:
+  db:
+    container_name: ctu_db
+    restart: always
+    image: mdillon/postgis
+    volumes:
+    - ./data/psql:/var/lib/postgresql/data:Z
+    environment:
+    - POSTGRES_USER=nodejs
+    - POSTGRES_DB=icodb
+    - POSTGRES_PASSWORD=123456
+    expose:
+    - 5432
+    ports:
+    - 7433:5432
+
+  app:
+    container_name: ctu_app
+    image: d.eyeteam.vn/ts-pm2
+    environment:
+    - CONFIG=/var/config/config.json
+    volumes:
+    - ./dist:/var/app:Z
+    - ./config/test:/var/config:Z
+    - ./package.json:/var/app/package.json:Z
+    - ./public:/var/public:Z
+    - ./uploads:/var/uploads:Z
+    - ./../ctu-client/dist:/var/client:Z
+    - ./node_modules:/var/app/node_modules:Z
+    - ./dump:/var/dump:Z
+    - ./entrypoint.sh:/var/entrypoint.sh:Z
+    depends_on:
+    - db
+    ports:
+    - 4000:3000
+    entrypoint: /var/entrypoint.sh
