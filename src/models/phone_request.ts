@@ -79,7 +79,7 @@ export default {
       let code = misc.generateCode(6, true);
       let now = (new Date()).getTime();
       
-      let sendRs = await telegramBot.sendMessageViaPhone(phone, `${code} is your verify BDL NETWORK code`);
+      let sendRs = await telegramBot.sendMessageViaPhone(phone, `${code} is your verify Contracitum.io code`);
   
       await schemas.UserRequest.create({
         action: action,

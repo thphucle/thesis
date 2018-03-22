@@ -8,6 +8,7 @@ const order = [
   'Image',
   'User',
   'Deposit',
+  'DepositRaw',
   'Token',  
   'Commission',  
   'Transaction',
@@ -16,9 +17,11 @@ const order = [
   'Order',
   'Trade',
   'HistoryExchange',
-  'Wallet',
   'IdentityRequest',
-  'IdentityImage'
+  'IdentityImage',
+  'BountyProgram',
+  'Bounty',
+  'Wallet'
   ];
 const dumpPath = path.join(__dirname,'..', '..', 'dump');
 

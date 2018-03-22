@@ -326,7 +326,8 @@ export default {
       delete rs.password;
       delete rs.password2;
       delete rs.salt;
-      await mailHelper.sendChangePasswordSuccess(rs);
+
+      mailHelper.sendChangePasswordSuccess(rs);
       
       return ResponseTemplate.success({
         data: rs
@@ -436,7 +437,7 @@ export default {
       });
     }
 
-    qrcodeUrl = auth.generateOtpQRCode(user.username, secret, 'BDL NETWORK');
+    qrcodeUrl = auth.generateOtpQRCode(user.username, secret, 'Contracitum.io');
     return ResponseTemplate.success({
       data: qrcodeUrl
     });

@@ -297,13 +297,14 @@ class User extends AController {
           phone: phone || '',
           national,
           status: 'waiting',
-          // btc_address: btc_address.data,
-          // bdl_address: bdl_address_req.data,
           salt: misc.sha256(saltCode),
           referral_id: user_referral ? user_referral.id : null ,
           facebook: '',
           telegram: '',
-          twitter: ''
+          twitter: '',
+          subscribe: false,
+          login_2fa: false,
+          withdraw_2fa: false
         }, {transaction: t});
   
         // let path = user_parent.path + rs.id + '/';
@@ -346,7 +347,8 @@ class User extends AController {
       delete user.password2;
       delete user.otp_secret;
       delete user.salt;
-      await mailHelper.sendRegisteredSuccess({id: user.id, fullname, username, email});
+
+      mailHelper.sendRegisteredSuccess({id: user.id, fullname, username, email});
       await mailHelper.sendVerifyMail({id: user.id, fullname, username, email, code: saltCode});       
       
       return helper.success(res, {
@@ -430,7 +432,12 @@ class User extends AController {
         eth_address,
         facebook,
         telegram,
-        twitter
+        twitter,
+        bct_username,
+        bct_link,
+        subscribe,
+        login_2fa,
+        withdraw_2fa
       } = req.body;
 
       if (p_id != j_id) {
@@ -478,10 +485,15 @@ class User extends AController {
         fullname: fullname || user.fullname,
         gender: gender || user.gender,
         birthday: birthday || user.birthday,
-        eth_address: eth_address || '',
-        facebook,
-        telegram,
-        twitter
+        eth_address: eth_address || user.eth_address,
+        facebook: facebook || user.facebook,
+        telegram: telegram || user.telegram,
+        twitter: twitter || user.twitter,
+        bct_username: bct_username || user.bct_username,
+        bct_link: bct_link || user.bct_link,
+        subscribe: subscribe || user.subscribe,
+        login_2fa: login_2fa || user.login_2fa,
+        withdraw_2fa: withdraw_2fa || user.withdraw_2fa
       };
 
       if (phone) {
@@ -703,12 +715,26 @@ class User extends AController {
         status: 'active'
       });
 
-      await mailHelper.sendActiveSuccess({id: user.id, fullname: user.fullname, username: user.username, email: user.email});       
-      await mailHelper.sendFollowMedia({id: user.id, fullname: user.fullname, username: user.username, email: user.email});       
-      await mailHelper.sendReferral({id: user.id, fullname: user.fullname, username: user.username, email: user.email});       
+      mailHelper.sendActiveSuccess({id: user.id, fullname: user.fullname, username: user.username, email: user.email});       
+      mailHelper.sendFollowMedia({id: user.id, fullname: user.fullname, username: user.username, email: user.email});       
+      mailHelper.sendReferral({id: user.id, fullname: user.fullname, username: user.username, email: user.email});       
+      
+      let b_prog = await schemas.BountyProgram.findOne({
+        where: {
+          key: 'register'
+        }
+      });
 
+      await schemas.Bounty.create({
+        type: b_prog.type,
+        amount: b_prog.reward || 50,
+        status: 'accepted',
+        bounty_program_id: b_prog.id,
+        user_id: user.id
+      });
+      //TODO: send email
       if (user.referral_id && user.referral_id > 0) {
-        let BOUNTY_CONST = await metaModel.getExchange(MetaKey.BOUNTY);
+        let REFERRAL_CONST = await metaModel.getExchange(MetaKey.REFERRAL);
         let userRef = await schemas.User.findOne({
           where: {
             id: user.referral_id
@@ -717,8 +743,8 @@ class User extends AController {
         });
         userRef = userRef.toJSON()
         await schemas.Commission.create({
-          type: 'bounty',
-          ctu: BOUNTY_CONST.data || 50,
+          type: 'referral',
+          ctu: REFERRAL_CONST.data || 50,
           usd: 0,
           eth: 0,
           bonus_rate: 0,
@@ -726,7 +752,7 @@ class User extends AController {
           user_id: user.referral_id,
           downline_id: user.id
         });
-        await mailHelper.sendReferralSuccess(userRef);       
+        mailHelper.sendReferralSuccess(userRef);       
       }
 
       return helper.redirect(res, '/verify', {
@@ -833,7 +859,7 @@ class User extends AController {
       }
 
       if (auth.verifyOtp(otp_code, user.otp_secret)) {
-        await user.update({otp_secret: ''});
+        await user.update({otp_secret: '', login_2fa: 'false', withdraw_2fa: 'false'});
         return res.send(ResponseTemplate.success());
       }
 
@@ -999,59 +1025,59 @@ class User extends AController {
   async getF1Commissions (req: Request, res: Response) {
     try {
       let user_id = (req as any).jwt.id;
-      let user = await schemas.User.findByPrimary(user_id);
+      let user = await schemas.User.findByPrimary(user_id); 
       if (!user) {
         return res.send(ResponseTemplate.dataNotFound("User", { user_id }));
       }
-      /*let childs = await schemas.User.findAll({
-        where: {
-          referral_id: user_id
-        },
-        include: {
-          required: false,
-          paranoid: false,
-          model: schemas.Commission,
-          as: 'downline',
-          where: {
-            user_id
-          },
-          attributes: ['ctu', 'eth']
-        },
-        attributes: ['id', 'username', 'fullname']
-      });*/
-
       /*childs = childs.map(c => {
         let cJson = c.toJSON();
         // console.log("F1 ", cJson);
         let sum = cJson.downline.reduce((s, n) => s + n.usd, 0);
         return Object.assign(cJson, {commission: sum});
       });*/
-      let childs = await schemas.User.findAll({
+
+      let commissions = await schemas.Commission.findAll({
         where: {
-          referral_id: user_id
-        },
-        attributes: ['id']
-      }).map(user => user.id);;
-      let comissions = await schemas.Commission.findAll({
-        where: {
-          downline_id: {
-            in: childs
-          },
           user_id
         },
-        include: [{
-          model: schemas.User,
-          as: 'downline',
-          attributes: ['id', 'username', 'fullname']
-        }]
+        raw: true,
+        attributes: [[sequelize.fn('SUM', sequelize.col('ctu')), 'total_ctu'], 'downline_id', 'type'],
+        group: ['downline_id', 'type'],
+        
       });
-      comissions = comissions.map(c => c.toJSON());
-
+  
+      let downlines = await schemas.User.findAll({
+        where: {
+          id: {
+            $in: commissions.map(c => c.downline_id)
+          }
+        },
+        attributes: ['id', 'username', 'fullname']
+      });
+  
+      let createdDays = await schemas.Commission.findAll({
+        where: {
+          downline_id: {
+            $in: commissions.map(c => c.downline_id)
+          },
+          user_id,
+          type: 'commission_deposit'
+        },
+        order: [
+          ['created_at', 'DESC'],
+        ],
+        attributes: ['downline_id', 'created_at']
+       
+      });
+  
+      commissions = commissions.map(c => {
+        let downline = downlines.find(d => d.id == c.downline_id);
+        let created = createdDays.find(d => d.downline_id == c.downline_id);
+        return Object.assign(c, {downline: downline.toJSON()}, c.type == 'commission_deposit' ? created.toJSON() : {});
+      });
+     
       return res.send(ResponseTemplate.success({
-        data: {
-          comissions,
-          referral: childs
-        }
+        data:   commissions
       }));
     } catch (e) {
       console.error(e.stack);

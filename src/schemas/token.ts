@@ -8,7 +8,10 @@ export interface TokenAttributes {
   cronjob_time: Date,
   day_state: number,
   is_manual: boolean,
-  status: string
+  status: string,
+  rate_eth_ctu: number,
+  eth: number,
+  ctu: number
 }
 
 export interface TokenInstance extends Sequelize.Instance<TokenAttributes> {
@@ -24,6 +27,9 @@ export default function(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
       defaultValue: 0.0
     },    
     rate_bdl_usd: DataTypes.DOUBLE,
+    rate_eth_ctu: DataTypes.DOUBLE,
+    eth: DataTypes.DOUBLE,
+    ctu: DataTypes.DOUBLE,
     type: DataTypes.STRING,
     package_name: DataTypes.STRING,    
     cronjob_time: DataTypes.DATE,
@@ -45,7 +51,8 @@ export default function(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
           Token.belongsTo(schemas.User);
           Token.hasOne(schemas.Withdraw);
           Token.belongsTo(schemas.Deposit);
-          Token.hasMany(schemas.Wallet);
+          Token.belongsTo(schemas.DepositRaw);
+          Token.hasOne(schemas.Wallet);
         }
       }
   });

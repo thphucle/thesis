@@ -3,7 +3,7 @@ import * as pug from "pug";
 import * as path from "path";
 
 function completedBonusTemplate (bonusCompleted) {
-	var subject = "Congratulation from BDL NETWORK!";
+	var subject = "Congratulation from Contracitum.io!";
 	var timestring = bonusCompleted.created_time.toISOString().replace('T', ' ').substr(0, 16);
 	var content = `
 	Dear,<br>
@@ -15,7 +15,7 @@ function completedBonusTemplate (bonusCompleted) {
 }
 
 function completedCommissionTemplate (commissionCompleted) {
-	var subject = "Congratulation from BDL NETWORK!";
+	var subject = "Congratulation from Contracitum.io!";
 	var timestring = commissionCompleted.created_time.toISOString().replace('T', ' ').substr(0, 16);
 	var content = `
 	Dear,<br>
@@ -29,7 +29,7 @@ function completedCommissionTemplate (commissionCompleted) {
 
 
 async function completedOrderTemplate (orderCompleted) {
-	var subject = "Congratulation from BDL NETWORK!";
+	var subject = "Congratulation from Contracitum.io!";
 	var timestring = orderCompleted.created_time.toISOString().replace('T', ' ').substr(0, 16);
 	var content = `
 	Dear,<br>
@@ -41,7 +41,7 @@ async function completedOrderTemplate (orderCompleted) {
 }
 
 async function completedTokenTemplate (orderCompleted) {
-	var subject = "Congratulation from BDL NETWORK!";
+	var subject = "Congratulation from Contracitum.io!";
 	var timestring = orderCompleted.created_time.toISOString().replace('T', ' ').substr(0, 16);
 	var content = `
 	Dear,<br>
@@ -83,7 +83,7 @@ function verifyTemplate (data) {
 }
 
 function verifyTemplateUsingCode (data, code) {
-	var subject = "Verify account from BDL NETWORK!";
+	var subject = "Verify account from Contracitum.io!";
 	var vlink  = config.mail.verifylink;
 	var link = vlink + "/" + data.username + "/" + code;
 	var tag = `<a href="${link}">${link}</a>`;
@@ -116,7 +116,7 @@ function verifyTemplateUsingCode (data, code) {
 function forgotPassTemplate (user, type, password_type) {
   // type are: shop | user
   type = type || "user";
-	var subject = `[BDL NETWORK] Forgot password ${password_type.split('_')[1]} account ${user.username}`;
+	var subject = `[Contracitum.io] Forgot password ${password_type.split('_')[1]} account ${user.username}`;
 	var websitelink = config.mail.websitelink;
 	var link = `${websitelink}/${type}/reset-password/${password_type}/${user.username}/${user.salt}`;
 	var tag = `<a href="${link}">${link}</a>`;
@@ -139,7 +139,7 @@ function forgotPassTemplate (user, type, password_type) {
 }
 
 function changeWalletTemplate (user) {
-	var subject = "Change wallet address from BDL NETWORK!";
+	var subject = "Change wallet address from Contracitum.io!";
 	var user_id = user.username;
 	var email = user.email;
 	var sand = user.sand;
@@ -166,7 +166,7 @@ function changeWalletTemplate (user) {
 
 function changePassWord2Template (user, role = 'user') {
   // type are: user | shop
-	var subject = `[BDL NETWORK] Change password 2 account ${user.username}`;
+	var subject = `[Contracitum.io] Change password 2 account ${user.username}`;
 	var websitelink = config.mail.websitelink;
 	let link = `${websitelink}/${role}/reset-password/password_2/${user.username}/${user.salt}`;
 	var tag = `<a href="${link}">${link}</a>`;
@@ -189,7 +189,7 @@ function changePassWord2Template (user, role = 'user') {
 }
 
 function notifyReinvestTemplate (user) {
-	var subject = "Notification for reinvestment from BDL NETWORK!";
+	var subject = "Notification for reinvestment from Contracitum.io!";
 	var content = `
 	Dear,<br>
 	Your campaign just completed a stage. Please, reinvest this campaign in 24 hours to continue.<br>
@@ -201,7 +201,7 @@ function notifyReinvestTemplate (user) {
 
 
 function newCompletedTemplate(bonusCompleted, toEmail) {
-	var subject = "Congratulation from BDL NETWORK!";
+	var subject = "Congratulation from Contracitum.io!";
   var timestring = bonusCompleted.created_time.toISOString().replace('T', ' ').substr(0, 16);
 	var content =`
 	Dear,<br>
@@ -213,9 +213,9 @@ function newCompletedTemplate(bonusCompleted, toEmail) {
 }
 
 function emailThanksTemplate() {
-	var subject = "Thanks from BDL NETWORK!";
+	var subject = "Thanks from Contracitum.io!";
 	var content = `
-	Thanks for your dismal BDL NETWORK accompanied during the last campaign, so hopefully you will come back with a new campaign as soon as possible.<br>
+	Thanks for your dismal Contracitum.io accompanied during the last campaign, so hopefully you will come back with a new campaign as soon as possible.<br>
 	Respect Admin
 	`;
 	var content_text = replaceAll(content, "<br>", "");
@@ -223,7 +223,7 @@ function emailThanksTemplate() {
 }
 
 function withdrawTemplate(user, amount) {
-	var subject = "Withdraw in BDL NETWORK currency";
+	var subject = "Withdraw in Contracitum.io currency";
 	var content = `
 		You withdrawed ${amount} BTS, currency: BTS
 	`;

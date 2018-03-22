@@ -110,7 +110,13 @@ async function handleTransaction(transaction, currency = 'eth') {
         });
       }
       console.log('Create wallet & commission');
-      await createWallet(deposit_record);
+      let tokenRecord = await transfer2Token(deposit_record);
+      deposit_record.token_id = tokenRecord.id;
+      deposit_record.ctu = tokenRecord.ctu;
+      let walletRecord = await createWallet(deposit_record);
+      tokenRecord.update({
+        wallet_id: walletRecord.id
+      })
       await createCommission(deposit_record);
       return;
     }
@@ -137,6 +143,30 @@ async function handleTransaction(transaction, currency = 'eth') {
   }
 }
 
+async function transfer2Token(deposit_record) {
+  if (deposit_record.status !== 'completed') {
+    return;
+  }
+
+  let ETH_CTU_CONST = await metaModel.getExchange(MetaKey.ETH_CTU);
+
+  let tokenRecord = await schemas.Token.create({
+    user_id: deposit_record.user_id,
+    deposit_raw_id: deposit_record.id,
+    rate_eth_ctu: ETH_CTU_CONST.data,
+    eth: deposit_record.amount,
+    ctu: deposit_record.amount * ETH_CTU_CONST.data,
+    type: 'deposit'
+  });
+
+  Telegram.toIssue(`
+  DEPOSIT SUCCESS - token
+  transaction: ${deposit_record.tx_id}  
+  `);
+
+  return tokenRecord;
+}
+
 async function createWallet(deposit_record) {
   if (deposit_record.status !== 'completed') {
     return;
@@ -145,12 +175,12 @@ async function createWallet(deposit_record) {
   let walletRecord = await schemas.Wallet.create({
     user_id: deposit_record.user_id,
     deposit_raw_id: deposit_record.id,
-    usd: deposit_record.usd,
-    amount: deposit_record.amount,
+    token_id: deposit_record.id,
+    amount: deposit_record.ctu,
     status: 'completed',
-    type: 'deposit',
-    wallet_name: deposit_record.currency === 'eth' ? 'eth' : 'ctu',
-    currency: deposit_record.currency
+    type: 'token',
+    wallet_name: 'ctu',
+    currency: 'ctu'
   });
 
   Telegram.toIssue(`
@@ -176,13 +206,15 @@ async function createCommission(deposit_record) {
     return;
   }
   let RATE_REFERRAL_CONST = await metaModel.getExchange(MetaKey.RATE_REFERRAL);
+  let ETH_CTU_CONST = await metaModel.getExchange(MetaKey.ETH_CTU);
   let data = {
-    type: 'deposit',
-    usd: deposit_record.usd * RATE_REFERRAL_CONST.data,
-    eth: deposit_record.amount * RATE_REFERRAL_CONST.data,
-    ctu: 0,
+    type: 'commission_deposit',
+    usd: 0,
+    eth: 0,
+    ctu: deposit_record.amount * RATE_REFERRAL_CONST.data * ETH_CTU_CONST.data,
     bonus_rate: RATE_REFERRAL_CONST.data,
-    rate_eth_usd: deposit_record.rate_eth_usd,
+    rate_eth_usd: 0,
+    rate_eth_ctu: ETH_CTU_CONST.data,
     deposit_raw_id: deposit_record.id,
     user_id: deposit_record.user_id,
     downline_id : deposit_record.user_id

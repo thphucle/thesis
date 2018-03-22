@@ -25,9 +25,9 @@ async function verify(token) {
 async function createToken(obj) {
     let NOW = Date.now() / 1000;
     let payload = {
-        exp: NOW + 86400,
+        exp: NOW + 7 * 86400,
         iat: NOW,
-        iss: "eye-solution.vn",
+        iss: "contractium.io",
         ...obj
     };
 

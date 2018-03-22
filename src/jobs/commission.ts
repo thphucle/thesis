@@ -289,6 +289,55 @@ async function testCommission() {
   })
 }
 
+exports.test_query = async () => {
+  try {
+    
+    let commissions = await schemas.Commission.findAll({
+      where: {
+        user_id: 3
+      },
+      raw: true,
+      attributes: [[sequelize.fn('SUM', sequelize.col('ctu')), 'total_ctu'], 'downline_id', 'type'],
+      group: ['downline_id', 'type'],
+      
+    });
+
+    let downlines = await schemas.User.findAll({
+      where: {
+        id: {
+          $in: commissions.map(c => c.downline_id)
+        }
+      },
+      attributes: ['id', 'username', 'fullname']
+    });
+
+    let createdDays = await schemas.Commission.findAll({
+      where: {
+        downline_id: {
+          $in: commissions.map(c => c.downline_id)
+        },
+        user_id: 3,
+        type: 'commission_deposit'
+      },
+      order: [
+        ['created_at', 'DESC'],
+      ],
+      attributes: ['downline_id', 'created_at']
+     
+    });
+
+    commissions = commissions.map(c => {
+      let downline = downlines.find(d => d.id == c.downline_id);
+      let created = createdDays.find(d => d.downline_id == c.downline_id);
+      return Object.assign(c, {downline: downline.toJSON()}, c.type == 'commission_deposit' ? created.toJSON() : {});
+    });
+
+    console.log("Commissions ==> ", commissions);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 exports.main = () => {
   try {
     // await commissionModel.calcAllBinary();

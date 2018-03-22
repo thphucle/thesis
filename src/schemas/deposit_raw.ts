@@ -43,6 +43,7 @@ export default function (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Da
           DepositRaw.belongsTo(schemas.User);
           DepositRaw.hasOne(schemas.Wallet);
           DepositRaw.hasOne(schemas.Commission);
+          DepositRaw.hasOne(schemas.Token);
         }
       }
     });

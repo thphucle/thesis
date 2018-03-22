@@ -26,7 +26,6 @@ router.get("/user/listfromuser/titlehistory", (v1 as any).user.listFromUserTitle
 router.get("/user/listfromuser", (v1 as any).user.listFromUsername);
 router.get("/user/link-account-token", (v1 as any).user.getLinkAccountToken);
 router.get("/user/f1-commissions", (v1 as any).user.getF1Commissions);
-
 router.post("/user/staff", (v1 as any).user.createStaffUser);
 router.get("/wallet/balance", (v1 as any).wallet.getBalance);
 router.get("/wallet/limit", (v1 as any).wallet.getLimit);
@@ -45,6 +44,8 @@ router.post("/phone-request/verify-otp", (v1 as any)['phone-request'].verifyOtp)
 router.post("/identity-request/verify", (v1 as any)['identity-request'].verify);
 router.post("/identity-request/reject", (v1 as any)['identity-request'].reject);
 router.post("/token/manual-create", (v1 as any).token.manualCreate);
+router.get("/bounty/get-all-bounty", (v1 as any).bounty.getAllBounty);
+router.post("/login/check", (v1 as any).login.check);
 
 for (let key of Object.keys(v1)) {
   

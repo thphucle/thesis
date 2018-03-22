@@ -5,5 +5,40 @@
     "host":"smtp.zoho.com",
     "secure": false,
     "port": 587
+  },
+  {
+    "user":"noreply@contractium.io",
+    "pass":"Contractium@2018",
+    "host":"smtp.zoho.com",
+    "secure": false,
+    "port": 587
+  },
+  {
+    "user":"noreply1@contractium.io",
+    "pass":"Contractium@2018",
+    "host":"smtp.zoho.com",
+    "secure": false,
+    "port": 587
+  }
+  ,{
+    "user":"noreply2@contractium.io",
+    "pass":"Contractium@2018",
+    "host":"smtp.zoho.com",
+    "secure": false,
+    "port": 587
+  },
+  {
+    "user":"noreply3@contractium.io",
+    "pass":"Contractium@2018",
+    "host":"smtp.zoho.com",
+    "secure": false,
+    "port": 587
+  },
+  {
+    "user":"noreply4@contractium.io",
+    "pass":"Contractium@2018",
+    "host":"smtp.zoho.com",
+    "secure": false,
+    "port": 587
   }
 ]

@@ -15,6 +15,11 @@ export interface UserAttributes {
   facebook: string,
   telegram: string,
   twitter: string,
+  bct_username: string,
+  bct_link: string,
+  subscribe: boolean,
+  login_2fa: boolean,
+  withdraw_2fa: boolean,
   role: string,
   salt: string,
   signed_in_time: Date,
@@ -61,9 +66,38 @@ export default function (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Da
     password: DataTypes.STRING,
     password2: DataTypes.STRING,
     path: DataTypes.STRING(2000),
-    facebook: DataTypes.STRING,
-    telegram: DataTypes.STRING,
-    twitter: DataTypes.STRING,
+    facebook: {
+      type: DataTypes.STRING,
+      defaultValue: ''
+    },
+    telegram: {
+      type: DataTypes.STRING,
+      defaultValue: ''
+    },
+    twitter: {
+      type: DataTypes.STRING,
+      defaultValue: ''
+    },
+    bct_username: {
+      type: DataTypes.STRING,
+      defaultValue: ''
+    },
+    bct_link: {
+      type: DataTypes.STRING,
+      defaultValue: ''
+    },
+    subscribe: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: 'false'
+    },
+    login_2fa: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: 'false'
+    },
+    withdraw_2fa:  {
+      type: DataTypes.BOOLEAN,
+      defaultValue: 'false'
+    },
     role: {
       type: DataTypes.ENUM("user", "admin", "support"),
       defaultValue: 'user'
@@ -168,6 +202,7 @@ export default function (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Da
           User.hasMany(schemas.Token);
           User.hasMany(schemas.IcoPackage);
           User.hasMany(schemas.Wallet);
+          User.hasMany(schemas.Bounty);
           User.hasMany(schemas.TitleHistory);
           User.hasOne(schemas.IdentityRequest);
           User.hasMany(schemas.Commission);

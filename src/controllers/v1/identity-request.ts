@@ -397,12 +397,24 @@ export class IdentityRequest extends AController {
       });
       
       let user = await schemas.User.findByPrimary(ident.user_id);
+      let b_prog = await schemas.BountyProgram.findOne({
+        where: {
+          key: 'kyc'
+        }
+      });
 
       await user.update({
         identity_status: 'verified',
         can_trade: true
       });
-
+      await schemas.Bounty.create({
+        type: b_prog.type,
+        amount: b_prog.reward || 100,
+        status: 'accepted',
+        bounty_program_id: b_prog.id,
+        user_id: user.id
+      });
+      
       /*await schemas.User.update({
         identity_status: 'verified',
         can_trade: true
@@ -412,7 +424,7 @@ export class IdentityRequest extends AController {
         }
       });*/
 
-      await mailHelper.sendUpdateKYCSuccess({id: user.id, username: user.username, fullname: user.fullname, email: user.email})
+      mailHelper.sendUpdateKYCSuccess({id: user.id, username: user.username, fullname: user.fullname, email: user.email})
 
       return res.send(responseTemplate.success({data: ident}));
 

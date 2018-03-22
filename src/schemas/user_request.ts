@@ -14,7 +14,7 @@ export interface UserRequestInstance extends Sequelize.Instance<UserRequestAttri
 export default function (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes) {
     var UserRequest = sequelize.define('UserRequest', {
         action: {
-            type: DataTypes.ENUM("activate", "forgotpassword", "validate_phone", "otp"),
+            type: DataTypes.ENUM("activate", "forgotpassword", "validate_phone", "otp", "login_otp"),
             allowNull: false
         },
         code: {

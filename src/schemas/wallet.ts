@@ -27,7 +27,7 @@ export default function(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
       },
       usd: DataTypes.DOUBLE,
       amount: DataTypes.DOUBLE,
-      type: DataTypes.ENUM("withdraw", "commission", "return", "bonus", "deposit", "ico", "manual", "transfer", "trade_fee", "referral", "bounty", "transfer_fee", "withdraw_fee"),
+      type: DataTypes.ENUM("withdraw", "commission", "return", "bonus", "deposit", "ico", "manual", "transfer", "trade_fee", "referral", "bounty", "transfer_fee", "withdraw_fee", "token"),
       wallet_name: DataTypes.ENUM('usd', 'eth', 'ctu')
     },{
         classMethods : {
@@ -41,6 +41,7 @@ export default function(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
             Wallet.belongsTo(schemas.IcoPackage);
             Wallet.belongsTo(schemas.Trade);
             Wallet.belongsTo(schemas.Order);
+            Wallet.belongsTo(schemas.Bounty);
             Wallet.belongsTo(schemas.Wallet, {as: 'transfer'});
           }
         }

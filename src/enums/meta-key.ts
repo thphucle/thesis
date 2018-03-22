@@ -31,6 +31,7 @@ export enum MetaKey {
   CAN_WITHDRAW = 'can_withdraw',
   LAST_BINARY_CRONJOB = 'last_binary_cronjob',
   ETH_USD = 'eth_usd',
+  ETH_CTU = 'eth_ctu',
   BOUNTY = 'bounty',
   REFERRAL = 'referral',
   RATE_REFERRAL = 'rate_referral',
