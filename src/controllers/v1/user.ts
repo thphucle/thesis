@@ -33,7 +33,7 @@ class User extends AController {
           exclude: ['password', 'password2']
         }
       });
-
+      //Test
       if (['admin', 'support'].indexOf(d_user.role) == -1) {
         return helper.success(res, {
           page, perpage,
